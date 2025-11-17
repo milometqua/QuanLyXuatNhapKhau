@@ -7,6 +7,7 @@ import java.util.List;
 
 import model.CTDonHang;
 import model.HoaDonBan;
+import model.HoaDonNhanVien;
 import model.KhachHang;
 import model.MatHang;
 
@@ -90,6 +91,20 @@ public class HoaDonBanDAO extends DAO{
 	    return hd;
 	}
 
+	public boolean capNhatTrangThai(HoaDonBan hd) throws Exception {
+	    String sql = "UPDATE tblHoaDonBan SET trangThai=? WHERE id=?";
+	    try (PreparedStatement ps = con.prepareStatement(sql)) {
+
+	        ps.setString(1, hd.getTrangThai());
+	        ps.setInt(2, hd.getId());
+
+	        return ps.executeUpdate() > 0;
+
+	    } catch (Exception e) {
+	        System.err.println("Lỗi cập nhật trạng thái hóa đơn: " + e.getMessage());
+	        throw e;
+	    }
+	}
 
 	
 	public int getSoLuongMatHang(int hoaDonId) {
@@ -103,6 +118,27 @@ public class HoaDonBanDAO extends DAO{
 	    }
 	    return 0;
 	}
+	
+	public boolean them(HoaDonNhanVien hdnv, int hoaDonBanId) throws Exception {
+	    String sql = "INSERT INTO tblHoaDonNhanVien(vaiTro, ngayDamNhan, nhanVienId, HoaDonBanId) "
+	               + "VALUES (?, ?, ?, ?)";
+
+	    try (PreparedStatement ps = con.prepareStatement(sql)) {
+
+	        ps.setString(1, hdnv.getVaiTro());
+	        ps.setDate(2, new java.sql.Date(hdnv.getNgayDamNhan().getTime()));
+	        ps.setInt(3, hdnv.getNhanVien().getId());
+	        ps.setInt(4, hoaDonBanId);
+
+	        return ps.executeUpdate() > 0;
+
+	    } catch (Exception e) {
+	        System.err.println("Lỗi thêm HoaDonNhanVien: " + e.getMessage());
+	        throw e;
+	    }
+	}
+
+
 
 	public double getTongTien(int hoaDonId) {
 	    String sql = "SELECT SUM(donGia * soLuong) AS tong FROM tblCTDonHang WHERE tblHoaDonBanid = ?";

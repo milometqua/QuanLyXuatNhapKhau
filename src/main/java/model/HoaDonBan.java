@@ -61,5 +61,15 @@ public class HoaDonBan {
 	public void setDsCTDonHang(List<CTDonHang> dsCTDonHang) {
 		this.dsCTDonHang = dsCTDonHang;
 	}
-	
+	public void duyet() {
+        this.trangThai = "Đã duyệt";
+    }
+
+    public void huy() {
+        this.trangThai = "Đã hủy";
+    }
+    
+    public void nhan() {
+    	this.trangThai = "Đã nhận";
+    }
 }

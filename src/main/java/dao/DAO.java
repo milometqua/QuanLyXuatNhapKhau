@@ -8,7 +8,7 @@ public class DAO {
 
     public DAO() {
         if (con == null) {
-            String dbUrl = "jdbc:mysql://localhost:3306/quanlybanhang?useSSL=false&serverTimezone=UTC";
+        	String dbUrl = "jdbc:mysql://localhost:3306/quanlybanhang?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false";
 
             try {
                 // Load driver MySQL 8

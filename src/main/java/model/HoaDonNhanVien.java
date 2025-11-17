@@ -7,6 +7,17 @@ public class HoaDonNhanVien {
 	private String vaiTro;
 	private Date ngayDamNhan;
 	private NhanVien nhanVien;
+	
+	public HoaDonNhanVien() {
+		super();
+	}
+
+	public HoaDonNhanVien(String vaiTro, Date ngay, NhanVien nv) {
+        this.vaiTro = vaiTro;
+        this.ngayDamNhan = ngay;
+        this.nhanVien = nv;
+    }
+	
 	public int getId() {
 		return id;
 	}
@@ -19,11 +30,11 @@ public class HoaDonNhanVien {
 	public void setVaiTro(String vaiTro) {
 		this.vaiTro = vaiTro;
 	}
-	public Date getAssignedAt() {
+	public Date getNgayDamNhan() {
 		return ngayDamNhan;
 	}
-	public void setAssignedAt(Date assignedAt) {
-		this.ngayDamNhan = assignedAt;
+	public void setNgayDamNhan(Date ngayDamNhan) {
+		this.ngayDamNhan = ngayDamNhan;
 	}
 	public NhanVien getNhanVien() {
 		return nhanVien;

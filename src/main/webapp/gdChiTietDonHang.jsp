@@ -99,7 +99,7 @@
             background: #cbd5e1;
         }
 
-        .btn-approve {
+        .btn-approve, .btn-reject {
             padding: 10px 20px;
             background: #16a34a;
             color: white;
@@ -109,7 +109,7 @@
             font-size: 15px;
         }
 
-        .btn-approve:hover {
+        .btn-approve:hover, .btn-reject:hover {
             background: #15803d;
         }
 
@@ -171,10 +171,18 @@
 
     <p class="total">Tổng tiền: <%= vn.format(dao.getTongTien(idHD)) %> đ</p>
 
-    <form action="gdXacNhanDuyet.jsp" method="post">
-        <input type="hidden" name="idHD" value="<%= idHD %>">
-        <button class="btn-approve">Duyệt đơn hàng</button>
-    </form>
+    <form action="doXuLyDon.jsp" method="post">
+	    <input type="hidden" name="idHD" value="<%= hd.getId() %>">
+	
+	    <button name="action" value="duyet" onclick="return confirm('Bạn chắc chắn duyệt đơn này?')" class="btn-approve">
+	        Duyệt đơn
+	    </button>
+	
+	    <button name="action" value="huy" onclick="return confirm('Bạn chắc chắn hủy đơn này?')" class="btn-reject">
+	        Hủy đơn
+	    </button>
+	</form>
+
 </div>
 
 </body>
