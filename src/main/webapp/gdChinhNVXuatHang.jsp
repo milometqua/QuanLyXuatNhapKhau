@@ -214,7 +214,7 @@
         <div class="card">
             <div class="card-header">
                 <div class="card-icon">📋</div>
-                <div class="card-badge">5 mới</div>
+                <!-- <div class="card-badge">5 mới</div> -->
             </div>
             <h2 class="card-title">Duyệt Đơn Hàng</h2>
             <p class="card-description">Xem và phê duyệt các đơn hàng trực tuyến</p>

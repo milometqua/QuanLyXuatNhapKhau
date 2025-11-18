@@ -8,13 +8,12 @@
 <%@ page import="model.NhanVien" %>
 
 <%
-    int idHD = Integer.parseInt(request.getParameter("idHD"));
     String action = request.getParameter("action");
 
     HoaDonBanDAO hdDAO = new HoaDonBanDAO();
     HoaDonNhanVienDAO hdnvDAO = new HoaDonNhanVienDAO();
 
-    HoaDonBan hd = hdDAO.getHoaDonTheoID(idHD);
+    HoaDonBan hd = (HoaDonBan) session.getAttribute("hoaDonDangChon");
 
     if (action.equals("duyet")) {
         hd.duyet();
@@ -29,7 +28,7 @@
     hdnv.setNgayDamNhan(new java.sql.Date(new java.util.Date().getTime()));
     hdnv.setNhanVien((NhanVien) session.getAttribute("nhanVien"));
 
-    boolean ok2 = hdnvDAO.them(hdnv, idHD);
+    boolean ok2 = hdnvDAO.them(hdnv, hd);
 
     if (ok1 && ok2) {
         session.setAttribute("msg", "Thành công!");

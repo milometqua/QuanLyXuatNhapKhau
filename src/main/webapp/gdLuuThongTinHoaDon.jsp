@@ -1,12 +1,13 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="dao.HoaDonBanDAO" %>
+<%@ page import="model.HoaDonBan" %>
 
 <%
-    String idHD = request.getParameter("idHD");
+    int id = Integer.parseInt(request.getParameter("idHD"));
 
-    if (idHD != null) {
-        session.setAttribute("idHoaDon", Integer.parseInt(idHD));
-        response.sendRedirect("gdChiTietDonHang.jsp");
-    } else {
-        out.println("Không nhận được ID hóa đơn");
-    }
+    HoaDonBanDAO dao = new HoaDonBanDAO();
+    HoaDonBan hd = dao.getHoaDonTheoID(id);
+
+    session.setAttribute("hoaDonDangChon", hd);
+
+    response.sendRedirect("gdChiTietDonHang.jsp");
 %>

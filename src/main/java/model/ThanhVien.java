@@ -9,7 +9,6 @@ public class ThanhVien {
     private String soDienThoai;
     private String vaiTro;
 
-    // Getters/Setters
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
     public String getTenDangNhap() { return tenDangNhap; }

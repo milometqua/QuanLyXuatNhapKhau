@@ -7,17 +7,15 @@
 <%@ page import="java.util.Locale" %>
 
 <%
-    // Kiểm tra đăng nhập
     if (session.getAttribute("nhanVien") == null) {
         response.sendRedirect("gdDangNhap.jsp");
         return;
     }
 
-	int idHD = (Integer) session.getAttribute("idHoaDon");
+	HoaDonBan hd = (HoaDonBan) session.getAttribute("hoaDonDangChon");
 
     HoaDonBanDAO dao = new HoaDonBanDAO();
 
-    HoaDonBan hd = dao.getHoaDonTheoID(idHD);
     List<CTDonHang> dsCT = hd.getDsCTDonHang();
 
     NumberFormat vn = NumberFormat.getInstance(new Locale("vi", "VN"));
@@ -169,7 +167,7 @@
         <% } %>
     </table>
 
-    <p class="total">Tổng tiền: <%= vn.format(dao.getTongTien(idHD)) %> đ</p>
+    <p class="total">Tổng tiền: <%= vn.format(hd.tinhTongTien()) %> đ</p>
 
     <form action="doXuLyDon.jsp" method="post">
 	    <input type="hidden" name="idHD" value="<%= hd.getId() %>">

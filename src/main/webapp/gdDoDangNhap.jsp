@@ -15,7 +15,6 @@
     ThanhVien thanhVienHopLe = tvDAO.checkLogin(tv);
 
     if (thanhVienHopLe != null) {
-        // Nếu là nhân viên → kiểm tra chức vụ
         if ("NhanVien".equalsIgnoreCase(thanhVienHopLe.getVaiTro())) {
             NhanVienDAO nvDAO = new NhanVienDAO();
             NhanVien nv = nvDAO.getNhanVien(thanhVienHopLe);
@@ -26,7 +25,6 @@
             }
         }
 
-        // Nếu không đúng chức vụ
         session.setAttribute("error", "Bạn không có quyền truy cập hệ thống xuất hàng.");
         response.sendRedirect("gdDangNhap.jsp");
     } else {

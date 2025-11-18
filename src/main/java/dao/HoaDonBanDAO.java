@@ -7,7 +7,6 @@ import java.util.List;
 
 import model.CTDonHang;
 import model.HoaDonBan;
-import model.HoaDonNhanVien;
 import model.KhachHang;
 import model.MatHang;
 
@@ -40,6 +39,7 @@ public class HoaDonBanDAO extends DAO{
                 kh.setTen(rs.getString("tenKH"));
 
                 hd.setKhachHang(kh);
+                hd.setDsCTDonHang(getCTDonHangByHD(rs.getInt("id")));
 
                 ds.add(hd);
             }
@@ -80,7 +80,6 @@ public class HoaDonBanDAO extends DAO{
 	            kh.setDiaChi(rs.getString("diaChiKH"));
 	            hd.setKhachHang(kh);
 
-	            // *** LOAD DANH SÁCH CHI TIẾT ***
 	            hd.setDsCTDonHang(getCTDonHangByHD(id));
 	        }
 
@@ -106,51 +105,6 @@ public class HoaDonBanDAO extends DAO{
 	    }
 	}
 
-	
-	public int getSoLuongMatHang(int hoaDonId) {
-	    String sql = "SELECT SUM(soLuong) AS sl FROM tblCTDonHang WHERE tblHoaDonBanid = ?";
-	    try (PreparedStatement ps = con.prepareStatement(sql)) {
-	        ps.setInt(1, hoaDonId);
-	        ResultSet rs = ps.executeQuery();
-	        if (rs.next()) return rs.getInt("sl");
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
-	    return 0;
-	}
-	
-	public boolean them(HoaDonNhanVien hdnv, int hoaDonBanId) throws Exception {
-	    String sql = "INSERT INTO tblHoaDonNhanVien(vaiTro, ngayDamNhan, nhanVienId, HoaDonBanId) "
-	               + "VALUES (?, ?, ?, ?)";
-
-	    try (PreparedStatement ps = con.prepareStatement(sql)) {
-
-	        ps.setString(1, hdnv.getVaiTro());
-	        ps.setDate(2, new java.sql.Date(hdnv.getNgayDamNhan().getTime()));
-	        ps.setInt(3, hdnv.getNhanVien().getId());
-	        ps.setInt(4, hoaDonBanId);
-
-	        return ps.executeUpdate() > 0;
-
-	    } catch (Exception e) {
-	        System.err.println("Lỗi thêm HoaDonNhanVien: " + e.getMessage());
-	        throw e;
-	    }
-	}
-
-
-
-	public double getTongTien(int hoaDonId) {
-	    String sql = "SELECT SUM(donGia * soLuong) AS tong FROM tblCTDonHang WHERE tblHoaDonBanid = ?";
-	    try (PreparedStatement ps = con.prepareStatement(sql)) {
-	        ps.setInt(1, hoaDonId);
-	        ResultSet rs = ps.executeQuery();
-	        if (rs.next()) return rs.getDouble("tong");
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
-	    return 0;
-	}
 	
 	public List<CTDonHang> getCTDonHangByHD(int hoaDonId) {
 	    List<CTDonHang> ds = new ArrayList<>();

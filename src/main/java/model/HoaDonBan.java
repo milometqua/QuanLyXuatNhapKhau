@@ -5,8 +5,6 @@ import java.util.List;
 
 public class HoaDonBan {
 	private int id;
-	private float tongTien;
-	private int tongSoLuong;
 	private String trangThai;
 	private Date ngayDatHang;
 	private KhachHang khachHang;
@@ -18,18 +16,6 @@ public class HoaDonBan {
 	}
 	public void setId(int id) {
 		this.id = id;
-	}
-	public float getTongTien() {
-		return tongTien;
-	}
-	public void setTongTien(float tongTien) {
-		this.tongTien = tongTien;
-	}
-	public int getTongSoLuong() {
-		return tongSoLuong;
-	}
-	public void setTongSoLuong(int tongSoLuong) {
-		this.tongSoLuong = tongSoLuong;
 	}
 	public String getTrangThai() {
 		return trangThai;
@@ -71,5 +57,25 @@ public class HoaDonBan {
     
     public void nhan() {
     	this.trangThai = "Đã nhận";
+    }
+    
+    public float tinhTongTien() {
+        float sum = 0;
+        if (this.dsCTDonHang != null) {
+            for (CTDonHang ct : this.dsCTDonHang) {
+                sum += ct.getDonGia() * ct.getSoLuong();
+            }
+        }
+        return sum;
+    }
+
+    public int tongMatHang() {
+        int sl = 0;
+        if (this.dsCTDonHang != null) {
+            for (CTDonHang ct : this.dsCTDonHang) {
+                sl += ct.getSoLuong();
+            }
+        }
+        return sl;
     }
 }

@@ -6,18 +6,15 @@
 <%@ page import="java.util.Locale" %>
 
 <%
-    // Kiểm tra đăng nhập
     Object obj = session.getAttribute("nhanVien");
     if (obj == null) {
         response.sendRedirect("gdDangNhap.jsp");
         return;
     }
 
-    // Lấy danh sách hóa đơn chờ xác nhận
     HoaDonBanDAO dao = new HoaDonBanDAO();
     List<HoaDonBan> ds = dao.getHoaDon("Chờ xác nhận");
 
-    // Format tiền Việt Nam
     NumberFormat vn = NumberFormat.getInstance(new Locale("vi", "VN"));
 %>
 
@@ -105,8 +102,8 @@
         <tr onclick="submitHD(<%= hd.getId() %>)" style="cursor:pointer;">
             <td><%= hd.getId() %></td>
             <td><%= hd.getKhachHang().getTen() %></td>
-            <td><%= dao.getSoLuongMatHang(hd.getId()) %></td>
-            <td><%= vn.format(dao.getTongTien(hd.getId())) %>đ</td>
+            <td><%= hd.tongMatHang() %></td>
+            <td><%= vn.format(hd.tinhTongTien()) %>đ</td>
             <td><%= hd.getNgayDatHang() %></td>
             <td><span class="status"><%= hd.getTrangThai() %></span></td>
         </tr>
