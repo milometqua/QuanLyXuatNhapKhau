@@ -153,18 +153,38 @@
             <th>Số lượng</th>
             <th>Đơn giá</th>
             <th>Thành tiền</th>
+            <th>Số lượng còn</th>
+        	<th>Trạng thái</th>
         </tr>
-
-        <% int i = 1;
-        for (CTDonHang ct : dsCT) { %>
-            <tr>
-                <td><%= i++ %></td>
-                <td><%= ct.getMatHang().getTen() %></td>
-                <td><%= ct.getSoLuong() %></td>
-                <td><%= vn.format(ct.getDonGia()) %> đ</td>
-                <td><%= vn.format(ct.getSoLuong() * ct.getDonGia()) %> đ</td>
-            </tr>
-        <% } %>
+        
+        <% 
+		int i = 1;
+		for (CTDonHang ct : dsCT) { 
+		    int soLuongDat = ct.getSoLuong();
+		    int soLuongCon = ct.getMatHang().getSoLuongTonKho();
+		
+		    String trangThai = soLuongCon >= soLuongDat ? 
+		                       "Đủ hàng" : 
+		                       "Không đủ";
+		%>
+		
+		<tr>
+		    <td><%= i++ %></td>
+		    <td><%= ct.getMatHang().getTen() %></td>
+		    <td><%= soLuongDat %></td>
+		    <td><%= vn.format(ct.getDonGia()) %> đ</td>
+		    <td><%= vn.format(soLuongDat * ct.getDonGia()) %> đ</td>
+		
+		    <!-- Cột mới -->
+		    <td><%= soLuongCon %></td>
+		
+		    <td style="font-weight:bold;
+		               color:<%= soLuongCon >= soLuongDat ? "#16a34a" : "#dc2626" %>;">
+		        <%= trangThai %>
+		    </td>
+		</tr>
+		
+		<% } %>
     </table>
 
     <p class="total">Tổng tiền: <%= vn.format(hd.tinhTongTien()) %> đ</p>
@@ -179,6 +199,9 @@
 	    <button name="action" value="huy" onclick="return confirm('Bạn chắc chắn hủy đơn này?')" class="btn-reject">
 	        Hủy đơn
 	    </button>
+	    <a href="gdSuaDonHang.jsp" class="btn-approve" style="background:#f97316;margin-left:10px;">
+	    	Sửa đơn hàng
+		</a>
 	</form>
 
 </div>

@@ -111,7 +111,7 @@ public class HoaDonBanDAO extends DAO{
 
 	    String sql = """
 	        SELECT c.id, c.soLuong, c.donGia,
-	               m.id AS mhId, m.ten AS tenMH
+	               m.id AS mhId, m.ten AS tenMH, m.soLuongTonKho
 	        FROM tblCTDonHang c
 	        JOIN tblMatHang m ON c.tblMatHangid = m.id
 	        WHERE c.tblHoaDonBanid = ?
@@ -130,8 +130,9 @@ public class HoaDonBanDAO extends DAO{
 	            MatHang mh = new MatHang();
 	            mh.setId(rs.getInt("mhId"));
 	            mh.setTen(rs.getString("tenMH"));
-	            ct.setMatHang(mh);
+	            mh.setSoLuongTonKho(rs.getInt("soLuongTonKho"));
 
+	            ct.setMatHang(mh);
 	            ds.add(ct);
 	        }
 	    } catch (Exception e) {
